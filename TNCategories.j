@@ -22,7 +22,9 @@
 @import "TNToolTip.j";
 
 var currentToolTip,
-    currentToolTipTimer;
+    currentToolTipTimer,
+    currentFocusToolTip,
+    currentFocusToolTipTimer;
 
 @implementation CPControl (tooltip)
 
@@ -119,5 +121,53 @@ var currentToolTip,
     currentToolTip = [TNToolTip toolTipWithString:_toolTip forView:self];
 }
 
-
 @end
+
+@implementation CPTextField (tooltip)
+
+- (void)setFocusToolTip:(CPString)aToolTip
+{
+	if( typeof( _focusToolTip ) == @"undefined" )
+		_focusToolTip = @"";
+		
+    if (_focusToolTip == aToolTip)
+        return;
+
+    _focusToolTip = aToolTip;
+
+    if (!_DOMElement)
+        return;
+
+    if (_focusToolTip)
+    {
+    	[[CPNotificationCenter defaultCenter] addObserver:self selector:@selector(fireFocusToolTip) name:CPTextFieldDidFocusNotification object:self];
+    	[[CPNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateFocusToolTip) name:CPTextFieldDidBlurNotification object:self];
+    }
+    else
+    {
+        [[CPNotificationCenter defaultCenter] removeObserver:self name:CPTextFieldDidFocusNotification object:self];
+		[[CPNotificationCenter defaultCenter] removeObserver:self name:CPTextFieldDidBlurNotification object:self];
+    }
+}
+
+- (CPString)focusToolTip
+{
+    return _focusToolTip;
+}
+
+- (void)fireFocusToolTip
+{
+	console.log('fireFocusToolTip');
+	[self showFocusToolTip:nil];
+}
+
+- (void)invalidateFocusToolTip
+{
+	[currentFocusToolTip close:nil];
+	currentFocusToolTip = nil;
+}
+
+- (void)showFocusToolTip:(CPTimer)aTimer
+{
+    currentFocusToolTip = [TNToolTip toolTipWithString:_focusToolTip forView:self];
+}
