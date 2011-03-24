@@ -35,7 +35,10 @@
 + (TNToolTip)toolTipWithString:(CPString)aString forView:(CPView)aView
 {
     var tooltip = [[TNToolTip alloc] initWithString:aString styleMask:TNAttachedWhiteWindowMask];
-
+	
+	[tooltip setAlphaValue:0];
+	[tooltip setAlphaValue:1 animate:YES duration:0.3];
+	
     [tooltip attachToView:aView];
     [tooltip resignMainWindow];
 
@@ -86,6 +89,15 @@
     }
 
     return self;
+}
+
+- (void)close:(id)sender
+{
+	[self setAlphaValue:0 animate:YES duration:0.3];
+
+	setTimeout( function() {
+		[super close:sender];
+	}, 300 )
 }
 
 @end
