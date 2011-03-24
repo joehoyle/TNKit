@@ -262,23 +262,30 @@ TNAttachedBlackWindowMask       = 1 << 26;
     }
 
     [_windowView setGravity:gravity];
-
     var o = originToBeReturned;
+    
+    //the origin if off the left of the screen
     if (o.x < 0)
     {
         [_windowView setGravity:nil];
         o.x = 0;
     }
+    
+    //the origin is off the right of the screen
     if (o.x + CPRectGetWidth([self frame]) > nativeRect.size.width)
     {
         [_windowView setGravity:nil];
         o.x = nativeRect.size.width - CPRectGetWidth([self frame]);
     }
+    
+    //the origin is off the top of the screen
     if (o.y < 0)
     {
         [_windowView setGravity:nil];
         o.y = 0;
     }
+    
+    //the origin is off the bottom of the screen
     if (o.y + CPRectGetHeight([self frame]) > nativeRect.size.height)
     {
         [_windowView setGravity:nil];
