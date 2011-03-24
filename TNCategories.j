@@ -91,8 +91,8 @@ var currentToolTip,
         currentToolTip = nil;
     }
 
-    if (_toolTip)
-        currentToolTipTimer = [CPTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(showToolTip:) userInfo:nil repeats:NO];
+    if ( _toolTip )
+        currentToolTipTimer = [CPTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(showToolTip:) userInfo:nil repeats:NO];
 }
 
 - (void)invalidateToolTip
