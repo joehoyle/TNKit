@@ -93,7 +93,7 @@ var currentToolTip,
         currentToolTip = nil;
     }
 
-    if ( _toolTip )
+    if (_toolTip)
         currentToolTipTimer = [CPTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(showToolTip:) userInfo:nil repeats:NO];
 }
 
@@ -117,7 +117,6 @@ var currentToolTip,
 {
     if (currentToolTip)
         [currentToolTip close:nil];
-
     currentToolTip = [TNToolTip toolTipWithString:_toolTip forView:self];
 }
 
@@ -129,7 +128,7 @@ var currentToolTip,
 {
 	if( typeof( _focusToolTip ) == @"undefined" )
 		_focusToolTip = @"";
-		
+
     if (_focusToolTip == aToolTip)
         return;
 
